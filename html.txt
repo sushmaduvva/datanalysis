@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/5f59ca6ad3.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.1.0/chart.js" integrity="sha512-LlFvdZpYhQdASf4aZfSpmyHD6+waYVfJRwfJrBgki7/Uh+TXMLFYcKMRim65+o3lFsfk20vrK9sJDute7BUAUw==" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="bg-card shadow mb-3 ml-5 mr-5">
+        <div class="d-flex flex-row justify-content-start">
+            <i class="fas fa-home p-3"></i>
+            <h1 class="heading pt-2">Analytical Maps</h1>
+        </div>
+        <div class="d-flex flex-row justify-content-start">
+            <button id="summaryButton" class="summary-button" onclick="onClickSummaryTab()">
+                Summary
+            </button>
+        </div>
+    </div>
+    <div class="d-flex flex-row justify-content-start ml-5 mr-5">
+        <button id="anamoly1" class="button selected-button" onclick="onClickAnamoly1()">
+            Anamoly classification
+        </button>
+        <button id="anamoly2" class="button" onclick="onClickAnamoly2()">
+            Power Loss Metrics
+        </button>
+        <button id="anamoly3" class="button" onclick="onClickAnamoly3()">
+            Inverter wise Analysis
+        </button>
+        <button id="anamoly4" class="button" onclick="onClickAnamoly4()">
+            Health History
+        </button>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="tabs-container">
+                <div id="anamolyTab" class="p-3">
+                    <div class="text-center">
+                        <div class="d-flex flex-row justify-content-center">
+                            <div class="bg-card shadow mr-3">
+                                <div class="card shadow">
+                                    <h1 class="head">Anamoly classification</h1>
+                                </div>
+                                <canvas id="myChart"></canvas>
+                            </div>
+                            <div class="bg-card shadow mr-3">
+                                <div class="card shadow">
+                                    <h1 class="head">Anamoly classification</h1>
+                                </div>
+                                <canvas id="myChart2"></canvas>
+                            </div>
+                            <div class="bg-card shadow mr-3">
+                                <div class="card shadow">
+                                    <h1 class="head">Anamoly classification</h1>
+                                </div>
+                                <canvas id="myChart1"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div id="timeToVisitTab" class="p-3">
+                    <div class="d-flex flex-row justify-content-center">
+                        <div class="bg-card shadow mr-3">
+                            <div class="card shadow">
+                                <h1 class="head">Power Loss Metrics</h1>
+                            </div>
+                            <canvas id="myChartp"></canvas>
+                        </div>
+                        <div class="bg-card shadow mr-3">
+                            <div class="card shadow">
+                                <h1 class="head">Power Loss Metrics</h1>
+                            </div>
+                            <canvas id="myChartp2"></canvas>
+                        </div>
+                        <div class="bg-card shadow mr-3">
+                            <div class="card shadow">
+                                <h1 class="head">Power Loss Metrics</h1>
+                            </div>
+                            <canvas id="myChartp1"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div id="attractionsTab" class="p-3">
+                    <div class="d-flex flex-row justify-content-center">
+                        <div class="bg-card shadow mr-3">
+                            <div class="card shadow">
+                                <h1 class="head">Inverter wise Analysis</h1>
+                            </div>
+                            <canvas id="myCharti"></canvas>
+                        </div>
+                        <div class="bg-card shadow mr-3">
+                            <div class="card shadow">
+                                <h1 class="head">Inverter wise Analysis</h1>
+                            </div>
+                            <canvas id="myCharti2"></canvas>
+                        </div>
+                        <div class="bg-card shadow mr-3">
+                            <div class="card shadow">
+                                <h1 class="head">Inverter wise Analysis</h1>
+                            </div>
+                            <canvas id="myCharti1"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div id="healthTab" class="p-3">
+                    <div class="d-flex flex-row justify-content-center">
+                        <div class="bg-card shadow mr-3">
+                            <div class="card shadow">
+                                <h1 class="head">Health History</h1>
+                            </div>
+                            <canvas id="myCharth"></canvas>
+                        </div>
+                        <div class="bg-card shadow mr-3">
+                            <div class="card shadow">
+                                <h1 class="head">Health History</h1>
+                            </div>
+                            <canvas id="myCharth2"></canvas>
+                        </div>
+                        <div class="bg-card shadow mr-3">
+                            <div class="card shadow">
+                                <h1 class="head">Health History</h1>
+                            </div>
+                            <canvas id="myCharth1"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="summaryTab" class="p-3">
+            <div class="container">
+                <div class="row">
+                    <div class="d-flex flex-column justify-content-center m-3">
+                        <div class="bg shadow">
+                            <div class="d-flex flex-column">
+                                <div class="d-flex flex-row">
+                                    <div class="col-6">
+                                        <p class="para pl-4 pr-5">Hotspot</p>
+                                    </div>
+                                    <div class="col-3">
+                                        <span class="dot"></span>
+                                    </div>
+                                    <div class="col-3">
+                                        <p id="hotspotValue"></p>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex flex-row">
+                                    <div class="col-6">
+                                        <div class="d-flex flex-row">
+                                            <i class="fas fa-info-circle mt-1 mr-4"></i>
+                                            <p>By Pass Diode Issues</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <span class="dotb"></span>
+                                    </div>
+                                    <div class="col-3">
+                                        <p id="bypassdiodeValue"></p>
+                                    </div>
+                                </div>
+                                <div class="d-flex flex-row">
+                                    <div class="col-6">
+                                        <div class="d-flex flex-row">
+                                            <i class="fas fa-info-circle mt-1 mr-4"></i>
+                                            <p>Dirt/Vegetation</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <span class="dotblue"></span>
+                                    </div>
+                                    <div class="col-3">
+                                        <p id="vegetationValue"></p>
+                                    </div>
+                                </div>
+                                <div class="d-flex flex-row">
+                                    <div class="col-6">
+                                        <div class="d-flex flex-row">
+                                            <i class="fas fa-info-circle mt-1 mr-4"></i>
+                                            <p>Broken Glass</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <span class="dotred"></span>
+                                    </div>
+                                    <div class="col-3">
+                                        <p id="brokenglassValue"></p>
+                                    </div>
+                                </div>
+                                <div class="d-flex flex-row">
+                                    <div class="col-6">
+                                        <div class="d-flex flex-row">
+                                            <i class="fas fa-info-circle mt-1 mr-4"></i>
+                                            <p>Others</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <span class="dotgreen"></span>
+                                    </div>
+                                    <div class="col-3">
+                                        <p id="othersValue"></p>
+                                    </div>
+                                </div>
+                                <span class="line"></span>
+                                <div class="d-flex flex-row pt-2">
+                                    <div class="col-6">
+                                        <div class="d-flex flex-row">
+                                            <i class="fas fa-info-circle mt-1 mr-4"></i>
+                                            <p class="para">Short Circuit</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <span class="dotblue"></span>
+                                    </div>
+                                    <div class="col-3">
+                                        <p id="shortcircuitValue"></p>
+                                    </div>
+                                </div>
+                                <span class="line"></span>
+                                <div class="d-flex flex-row pt-2">
+                                    <div class="col-6">
+                                        <div class="d-flex flex-row">
+                                            <i class="fas fa-info-circle mt-1 mr-4"></i>
+                                            <p class="para">Open Circuit</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <span class="dotgreen"></span>
+                                    </div>
+                                    <div class="col-3">
+                                        <p id="opencircuitValue"></p>
+                                    </div>
+                                </div>
+                                <span class="line"></span>
+                                <div class="d-flex flex-row pt-2">
+                                    <div class="col-6">
+                                        <div class="d-flex flex-row">
+                                            <i class="fas fa-info-circle mt-1 mr-4"></i>
+                                            <p class="para">Panel Failure</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <span class="dot"></span>
+                                    </div>
+                                    <div class="col-3">
+                                        <p id="panelfailureValue"></p>
+                                    </div>
+                                </div>
+                                <div class="d-flex flex-row">
+                                    <div class="col-6">
+                                        <p class="pl-4">Module</p>
+                                    </div>
+                                    <div class="col-3">
+                                        <span class="dotred"></span>
+                                    </div>
+                                    <div class="col-3">
+                                        <p id="moduleValue"></p>
+                                    </div>
+                                </div>
+                                <div class="d-flex flex-row">
+                                    <div class="col-6">
+                                        <p class="pl-4">Table</p>
+                                    </div>
+                                    <div class="col-3">
+                                        <span class="dotb"></span>
+                                    </div>
+                                    <div class="col-3">
+                                        <p id="tableValue"></p>
+                                    </div>
+                                </div>
+                                <span class="line"></span>
+                                <div class="d-flex flex-row pt-2">
+                                    <div class="col-6">
+                                        <div class="d-flex flex-row">
+                                            <i class="fas fa-info-circle mt-1 mr-4"></i>
+                                            <p class="para">PID</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <span class="dotb"></span>
+                                    </div>
+                                    <div class="col-3">
+                                        <p id="pidValue"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

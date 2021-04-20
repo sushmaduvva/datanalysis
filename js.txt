@@ -1,0 +1,446 @@
+let anamoly1ButtonEl = document.getElementById("anamoly1");
+let anamoly2ButtonEl = document.getElementById("anamoly2");
+let anamoly3ButtonEl = document.getElementById("anamoly3");
+let anamoly4ButtonEl = document.getElementById("anamoly4");
+let summaryButtonEl = document.getElementById("summaryButton");
+
+let anamoly1TabEl = document.getElementById("anamolyTab");
+let anamoly2TabEl = document.getElementById("timeToVisitTab");
+let anamoly3TabEl = document.getElementById("attractionsTab");
+let anamoly4TabEl = document.getElementById("healthTab");
+let summaryTabEl = document.getElementById("summaryTab");
+
+function onClickAnamoly1() {
+    anamoly1TabEl.classList.remove("d-none");
+    anamoly2TabEl.classList.add("d-none");
+    anamoly3TabEl.classList.add("d-none");
+    anamoly4TabEl.classList.add("d-none");
+    summaryTabEl.classList.add("d-none");
+
+    anamoly1ButtonEl.classList.add("selected-button");
+    anamoly2ButtonEl.classList.remove("selected-button");
+    anamoly3ButtonEl.classList.remove("selected-button");
+    anamoly4ButtonEl.classList.remove("selected-button");
+    summaryButtonEl.classList.remove("selected-button");
+}
+
+function onClickAnamoly2() {
+    anamoly1TabEl.classList.add("d-none");
+    anamoly2TabEl.classList.remove("d-none");
+    anamoly3TabEl.classList.add("d-none");
+    anamoly4TabEl.classList.add("d-none");
+    summaryTabEl.classList.add("d-none");
+
+    anamoly1ButtonEl.classList.remove("selected-button");
+    anamoly2ButtonEl.classList.add("selected-button");
+    anamoly3ButtonEl.classList.remove("selected-button");
+    anamoly4ButtonEl.classList.remove("selected-button");
+    summaryButtonEl.classList.remove("selected-button");
+}
+
+function onClickAnamoly3() {
+    anamoly1TabEl.classList.add("d-none");
+    anamoly2TabEl.classList.add("d-none");
+    anamoly3TabEl.classList.remove("d-none");
+    anamoly4TabEl.classList.add("d-none");
+    summaryTabEl.classList.add("d-none");
+
+    anamoly1ButtonEl.classList.remove("selected-button");
+    anamoly2ButtonEl.classList.remove("selected-button");
+    anamoly3ButtonEl.classList.add("selected-button");
+    anamoly4ButtonEl.classList.remove("selected-button");
+    summaryButtonEl.classList.remove("selected-button");
+}
+
+function onClickAnamoly4() {
+    anamoly1TabEl.classList.add("d-none");
+    anamoly2TabEl.classList.add("d-none");
+    anamoly3TabEl.classList.add("d-none");
+    anamoly4TabEl.classList.remove("d-none");
+    summaryTabEl.classList.add("d-none");
+
+    anamoly1ButtonEl.classList.remove("selected-button");
+    anamoly2ButtonEl.classList.remove("selected-button");
+    anamoly3ButtonEl.classList.remove("selected-button");
+    anamoly4ButtonEl.classList.add("selected-button");
+    summaryButtonEl.classList.remove("selected-button");
+}
+
+function onClickSummaryTab() {
+    anamoly1TabEl.classList.add("d-none");
+    anamoly2TabEl.classList.add("d-none");
+    anamoly3TabEl.classList.add("d-none");
+    anamoly4TabEl.classList.add("d-none");
+    summaryTabEl.classList.remove("d-none");
+
+    anamoly1ButtonEl.classList.remove("selected-button");
+    anamoly2ButtonEl.classList.remove("selected-button");
+    anamoly3ButtonEl.classList.remove("selected-button");
+    anamoly4ButtonEl.classList.remove("selected-button");
+    summaryButtonEl.classList.add("selected-button");
+}
+/*bar chart*/
+let options = {
+    method: "GET",
+};
+
+fetch(" https://www.takvaviya.in/thermal/thermal/project/data/hero_ichawar", options)
+    .then(function(response) {
+        return response.json();
+    })
+    .then(function(jsonData) {
+        let hotspotCount = (jsonData['6']['2019-10-06'].layers.Hotspot.Count);
+        let hotspotColor = (jsonData['6']['2019-10-06'].layers.Hotspot.color);
+        let brokenglassCount = (jsonData['6']['2019-10-06'].layers.Hotspot.sub_group['Broken Glass'].Count);
+        let brokenglassColor = (jsonData['6']['2019-10-06'].layers.Hotspot.sub_group['Broken Glass'].color);
+        let othersCount = (jsonData['6']['2019-10-06'].layers.Hotspot.sub_group.Others.Count);
+        let othersColor = (jsonData['6']['2019-10-06'].layers.Hotspot.sub_group.Others.color);
+        let shortcircuitCount = (jsonData['6']['2019-10-06'].layers['Short Circuit'].Count);
+        let shortcircuitColor = (jsonData['6']['2019-10-06'].layers['Short Circuit'].color);
+        let opencircuitCount = (jsonData['6']['2019-10-06'].layers['Open Circuit'].Count);
+        let opencircuitColor = (jsonData['6']['2019-10-06'].layers['Open Circuit'].color);
+        let panelfailureCount = (jsonData['6']['2019-10-06'].layers['Panel Failure'].Count);
+        let panelfailureColor = (jsonData['6']['2019-10-06'].layers['Panel Failure'].color);
+        let pidCount = (jsonData['6']['2019-10-06'].layers.PID.Count);
+        let pidColor = (jsonData['6']['2019-10-06'].layers.PID.color);
+        let bypassdiodeCount = (jsonData['6']['2019-10-06'].layers.Hotspot.sub_group['By Pass Diode Issues'].Count);
+        let bypassdiodePower = (jsonData['6']['2019-10-06'].layers.Hotspot.sub_group['By Pass Diode Issues'].Power);
+        let vegetationCount = (jsonData['6']['2019-10-06'].layers.Hotspot.sub_group['Dirt / Vegetation'].Count);
+        let moduleCount = (jsonData['6']['2019-10-06'].layers['Panel Failure'].sub_group.Module.Count);
+        let moduleColor = (jsonData['6']['2019-10-06'].layers['Panel Failure'].sub_group.Module.color);
+        let tableCount = (jsonData['6']['2019-10-06'].layers['Panel Failure'].sub_group.Table.Count);
+        let tableColor = (jsonData['6']['2019-10-06'].layers['Panel Failure'].sub_group.Table.color);
+
+
+
+        /*anamoly*/
+        const ctx = document.getElementById("myChart").getContext('2d');
+        const data = {
+            labels: ["PID", "PanelFailure", "OpenCircuit", "ShortCircuit", "Hotspots"],
+            datasets: [{
+                label: 'My First Dataset',
+                data: [pidCount, panelfailureCount, opencircuitCount, shortcircuitCount, hotspotCount],
+                fill: false,
+                borderColor: 'rgb(75, 192, 192)',
+                backgroundColor: [
+                    'rgba(255,255,0)',
+                    'rgba(0,0,0)',
+                    'rgba(0,128,0)',
+                    'rgba(0,0,255)',
+                    'rgba(0, 0, 0)',
+                ],
+                tension: 0.1
+            }]
+        };
+        const myChart = new Chart(ctx, {
+            type: 'bar',
+            data: data
+        });
+
+
+
+        /*pie chart*/
+        const ctx1 = document.getElementById("myChart1").getContext('2d');
+        const data1 = {
+            labels: ["PID", "PanelFailure", "OpenCircuit", "ShortCircuit", "Hotspots"],
+            datasets: [{
+                label: 'My Third Dataset',
+                data: [pidCount, panelfailureCount, opencircuitCount, shortcircuitCount, hotspotCount],
+                fill: false,
+                borderColor: 'rgb(75, 192, 192)',
+                backgroundColor: [
+                    'rgba(255,255,0)',
+                    'rgba(0,0,0)',
+                    'rgba(0,128,0)',
+                    'rgba(0,0,255)',
+                    'rgba(0,0,0)',
+                ],
+                tension: 0.1
+            }]
+        };
+        const myChart1 = new Chart(ctx1, {
+            type: 'pie',
+            data: data1
+        });
+
+        /*barH chart*/
+        const ctx2 = document.getElementById("myChart2").getContext('2d');
+        const data2 = {
+            labels: ["By Pass Diodes", "Dirt/Vegetation", "Broken Glass", "Hotspots"],
+            datasets: [{
+                label: 'My Second Dataset',
+                data: [bypassdiodeCount, vegetationCount, brokenglassCount, hotspotCount],
+                fill: false,
+                borderColor: 'rgb(75, 192, 192)',
+                backgroundColor: [
+                    'rgba(255,255,0)',
+                    'rgba(0,0,255)',
+                    'rgba(255,0,0)',
+                    'rgba(0,0,0)',
+                ],
+                tension: 0.1
+            }]
+        };
+        const myChart2 = new Chart(ctx2, {
+            type: 'bar',
+            data: data2,
+            options: {
+                indexAxis: 'y',
+            }
+        });
+
+        /*power loss*/
+        const ctxp = document.getElementById("myChartp").getContext('2d');
+        const datap = {
+            labels: ["PanelFailure", "OpenCircuit", "ShortCircuit", "By Pass Diode Power"],
+            datasets: [{
+                label: 'My First Dataset',
+                data: [550, 1300, 955, 2016],
+                fill: false,
+                borderColor: 'rgb(75, 192, 192)',
+                backgroundColor: [
+                    'rgba(0,0,0)',
+                    'rgba(0,128,0)',
+                    'rgba(0,0,255)',
+                    'rgba(255,255,0)',
+                ],
+                tension: 0.1
+            }]
+        };
+        const myChartP = new Chart(ctxp, {
+            type: 'bar',
+            data: datap
+        });
+
+
+
+        /*pie chart*/
+        const ctxp1 = document.getElementById("myChartp1").getContext('2d');
+        const datap1 = {
+            labels: ["PanelFailure", "OpenCircuit", "ShortCircuit", "By Pass Diode Power"],
+            datasets: [{
+                label: 'My Third Dataset',
+                data: [550, 1300, 955, 2016],
+                fill: false,
+                borderColor: 'rgb(75, 192, 192)',
+                backgroundColor: [
+                    'rgba(0,0,0)',
+                    'rgba(0,128,0)',
+                    'rgba(0,0,255)',
+                    'rgba(255,255,0)',
+                ],
+                tension: 0.1
+            }]
+        };
+        const myChartP1 = new Chart(ctxp1, {
+            type: 'pie',
+            data: datap1
+        });
+
+        /*barH chart*/
+        const ctxp2 = document.getElementById("myChartp2").getContext('2d');
+        const datap2 = {
+            labels: ["PanelFailure", "OpenCircuit", "ShortCircuit", "By Pass Diode Power"],
+            datasets: [{
+                label: 'My Second Dataset',
+                data: [550, 1300, 955, 2016],
+                fill: false,
+                borderColor: 'rgb(75, 192, 192)',
+                backgroundColor: [
+                    'rgba(0,0,0)',
+                    'rgba(0,128,0)',
+                    'rgba(0,0,255)',
+                    'rgba(255,255,0)',
+                ],
+                tension: 0.1
+            }]
+        };
+        const myChartP2 = new Chart(ctxp2, {
+            type: 'bar',
+            data: datap2,
+            options: {
+                indexAxis: 'y',
+            }
+        });
+
+        /*inverter loss*/
+        const ctxi = document.getElementById("myCharti").getContext('2d');
+        const datai = {
+            labels: ["PanelFailure", "OpenCircuit", "ShortCircuit", "By Pass Diode Power", "Hotspot"],
+            datasets: [{
+                label: 'My First Dataset',
+                data: [65, 59, 80, 81, 94],
+                fill: false,
+                borderColor: 'rgb(75, 192, 192)',
+                backgroundColor: [
+                    'rgba(0,0,0)',
+                    'rgba(0,128,0)',
+                    'rgba(0,0,255)',
+                    'rgba(255,255,0)',
+                    'rgba(0,0,0)',
+                ],
+                tension: 0.1
+            }]
+        };
+        const myChartI = new Chart(ctxi, {
+            type: 'bar',
+            data: datai
+        });
+
+
+
+        /*pie chart*/
+        const ctxi1 = document.getElementById("myCharti1").getContext('2d');
+        const datai1 = {
+            labels: ["PanelFailure", "OpenCircuit", "ShortCircuit", "By Pass Diode Power", "Hotspot"],
+            datasets: [{
+                label: 'My Third Dataset',
+                data: [65, 59, 80, 81, 94],
+                fill: false,
+                borderColor: 'rgb(75, 192, 192)',
+                backgroundColor: [
+                    'rgba(0,0,0)',
+                    'rgba(0,128,0)',
+                    'rgba(0,0,255)',
+                    'rgba(255,255,0)',
+                    'rgba(0,0,0)',
+                ],
+                tension: 0.1
+            }]
+        };
+        const myChartI1 = new Chart(ctxi1, {
+            type: 'pie',
+            data: datai1
+        });
+
+        /*barH chart*/
+        const ctxi2 = document.getElementById("myCharti2").getContext('2d');
+        const datai2 = {
+            labels: ["PanelFailure", "OpenCircuit", "ShortCircuit", "By Pass Diode Power", "Hotspot"],
+            datasets: [{
+                label: 'My Second Dataset',
+                data: [65, 59, 80, 81, 94],
+                fill: false,
+                borderColor: 'rgb(75, 192, 192)',
+                backgroundColor: [
+                    'rgba(0,0,0)',
+                    'rgba(0,128,0)',
+                    'rgba(0,0,255)',
+                    'rgba(255,255,0)',
+                    'rgba(0,0,0)',
+                ],
+                tension: 0.1
+            }]
+        };
+        const myChartI2 = new Chart(ctxi2, {
+            type: 'bar',
+            data: datai2,
+            options: {
+                indexAxis: 'y',
+            }
+        });
+
+
+        /*health history*/
+        const ctxh = document.getElementById("myCharth").getContext('2d');
+        const datah = {
+            labels: ["PanelFailure", "OpenCircuit", "ShortCircuit", "By Pass Diode Power", "Hotspot"],
+            datasets: [{
+                label: 'My First Dataset',
+                data: [165, 159, 180, 181, 194],
+                fill: false,
+                borderColor: 'rgb(75, 192, 192)',
+                backgroundColor: [
+                    'rgba(0,0,0)',
+                    'rgba(0,128,0)',
+                    'rgba(0,0,255)',
+                    'rgba(255,255,0)',
+                    'rgba(102,51,102)',
+                ],
+                tension: 0.1
+            }]
+        };
+        const myChartH = new Chart(ctxh, {
+            type: 'bar',
+            data: datah
+        });
+
+
+
+        /*pie chart*/
+        const ctxh1 = document.getElementById("myCharth1").getContext('2d');
+        const datah1 = {
+            labels: ["PanelFailure", "OpenCircuit", "ShortCircuit", "By Pass Diode Power", "Hotspot"],
+            datasets: [{
+                label: 'My Third Dataset',
+                data: [165, 159, 180, 181, 194],
+                fill: false,
+                borderColor: 'rgb(75, 192, 192)',
+                backgroundColor: [
+                    'rgba(0,0,0)',
+                    'rgba(0,128,0)',
+                    'rgba(0,0,255)',
+                    'rgba(255,255,0)',
+                    'rgba(102,51,102)',
+                ],
+                tension: 0.1
+            }]
+        };
+        const myChartH1 = new Chart(ctxh1, {
+            type: 'pie',
+            data: datah1
+        });
+
+        /*barH chart*/
+        const ctxh2 = document.getElementById("myCharth2").getContext('2d');
+        const datah2 = {
+            labels: ["PanelFailure", "OpenCircuit", "ShortCircuit", "By Pass Diode Power", "Hotspot"],
+            datasets: [{
+                label: 'My Second Dataset',
+                data: [165, 159, 180, 181, 194],
+                fill: false,
+                borderColor: 'rgb(75, 192, 192)',
+                backgroundColor: [
+                    'rgba(0,0,0)',
+                    'rgba(0,128,0)',
+                    'rgba(0,0,255)',
+                    'rgba(255,255,0)',
+                    'rgba(102,51,102)',
+                ],
+                tension: 0.1
+            }]
+        };
+        const myChartH2 = new Chart(ctxh2, {
+            type: 'bar',
+            data: datah2,
+            options: {
+                indexAxis: 'y',
+            }
+        });
+
+
+        /*summary*/
+        let hotspotvalueEl = document.getElementById("hotspotValue");
+        hotspotvalueEl.textContent = hotspotCount;
+        let bypassdiodeValueEl = document.getElementById("bypassdiodeValue");
+        bypassdiodeValueEl.textContent = bypassdiodeCount;
+        let vegetationValueEl = document.getElementById("vegetationValue");
+        vegetationValueEl.textContent = vegetationCount;
+        let brokenglassValueEl = document.getElementById("brokenglassValue");
+        brokenglassValueEl.textContent = brokenglassCount;
+        let othersValueEl = document.getElementById("othersValue");
+        othersValueEl.textContent = othersCount;
+        let shortcircuitEl = document.getElementById("shortcircuitValue");
+        shortcircuitEl.textContent = shortcircuitCount;
+        let opencircuitEl = document.getElementById("opencircuitValue");
+        opencircuitEl.textContent = opencircuitCount;
+        let panelfailureEl = document.getElementById("panelfailureValue");
+        panelfailureEl.textContent = panelfailureCount;
+        let moduleEl = document.getElementById("moduleValue");
+        moduleEl.textContent = moduleCount;
+        let tableEl = document.getElementById("tableValue");
+        tableEl.textContent = tableCount;
+        let pidEl = document.getElementById("pidValue");
+        pidEl.textContent = pidCount;
+
+    });
